@@ -44,7 +44,7 @@ activity_steps_day <- aggregate(steps ~ date, data = activity, FUN = sum, na.rm 
 hist(activity_steps_day$steps, xlab = "Number of steps per day", main = "Total number of steps per day",col="grey")
 ```
 
-![plot of chunk unnamed-chunk-5](instructions_fig/unnamed-chunk-4-1.png) 
+![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-4-1.png) 
 
 ##### 3. Calculate and report the mean and median of the total number of steps taken per day
 
@@ -78,7 +78,7 @@ plot(activity_average_daily$interval, activity_average_daily$steps, type = "l", 
      ylab = "Total number of steps per interval", main = "Average number of steps taken, averaged across all days") 
 ```
 
-![plot of chunk unnamed-chunk-5](instructions_fig/unnamed-chunk-7-1.png) 
+![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-7-1.png) 
 
 ##### 2. Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
 
@@ -116,7 +116,7 @@ hist(missing_values$interval, main = "NAs repartition per interval", col = "grey
 hist(as.numeric(missing_values$date), main = "NAs repartition per day", breaks = 80, col="grey")
 ```
 
-![plot of chunk unnamed-chunk-5](instructions_fig/unnamed-chunk-10-1.png) 
+![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-10-1.png) 
 
 We notice a uniform distribution of NAs in the intervals. However, NA's are in only 8 days. Hence, we should take the mean for missing interval across all the days in the dataset.
 
@@ -157,7 +157,7 @@ new_activity_steps_day <- aggregate(steps ~ date, data = new_activity, FUN = sum
 hist(new_activity_steps_day$steps, xlab = "Number of steps per day", main = "Steps / Day (NAs filled)", col = "green")
 ```
 
-![plot of chunk unnamed-chunk-5](instructions_fig/unnamed-chunk-12-1.png) 
+![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-12-1.png) 
 
 Then, we calculate the new mean and median values and we store them with the previous results in a table with the package xtable.
 
@@ -202,6 +202,6 @@ plot <- ggplot(activity_steps_interval_weektype, aes(interval, steps, color = we
 print(plot)
 ```
 
-![plot of chunk unnamed-chunk-5](instructions_fig/unnamed-chunk-16-1.png) 
+![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-16-1.png) 
 
 Overall, it seems that people are ready earlier in the week days with a higher peak in the morning. During the weekends, people are more active all the day than during the weekdays.
