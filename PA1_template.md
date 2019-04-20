@@ -55,8 +55,8 @@ mean_steps <- format(mean_steps,digits = 1)
 median_steps <- format(median_steps,digits = 1)
 ```
 
-* Mean steps per day: `r mean_steps`
-* Median steps per day:  `r median_steps`
+* Mean steps per day: 10766
+* Median steps per day:  10765
 
 -----
 
@@ -88,8 +88,8 @@ maximum_interval <- activity_average_daily$interval[which(activity_average_daily
 maximum_steps <- format(maximum_steps, digits = 1)
 ```
 
-* Highest number of steps for 5-minutes-interval: `r maximum_steps`
-* Corresponding interval:  `r maximum_interval`
+* Highest number of steps for 5-minutes-interval: 206
+* Corresponding interval:  835
 
 ----
 
@@ -103,7 +103,7 @@ maximum_steps <- format(maximum_steps, digits = 1)
 mv <- sum(is.na(activity))
 ```
 
-* Number of missing values: `r mv`
+* Number of missing values: 2304
 
 ##### 2. Devise a strategy for filling in all of the missing values in the dataset
 
@@ -174,7 +174,7 @@ table_results <- xtable(results)
 print(table_results, type = "html")
 ```
 
-Finally, ignoring missing values does not change the mean value but the median value is reduced only by 0.027% . Besides, both histograms have the same behavior.
+Finally, ignoring missing values does not change the mean value (which is 10766) but the median value is reduced only by 0.027% (from 10765 to 10762). Besides, both histograms have the same behavior.
 
 
 ## Are there differences in activity patterns between weekdays and weekends?
