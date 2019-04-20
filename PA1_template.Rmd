@@ -1,5 +1,6 @@
+# Reproducible Research: Peer Assessment 1
+
 ---
-title: "Reproducible Research: Peer Assessment 1"
 output: 
   html_document:
     keep_md: true
@@ -10,14 +11,11 @@ library(xtable)
 library(ggplot2)
 library(lubridate)
 library(bindrcpp)
-library(knitr)
-opts_chunk$set(echo = TRUE)
-library(dplyr)
 ```
 
 ## Loading and preprocessing the data
 
-```{r}
+```{r, echo=TRUE}
 rm(list=ls())
 
 if(!file.exists("activity.csv")) {
@@ -36,23 +34,23 @@ activity <- read.csv("activity.csv")
 
 We use the aggregate function and we remove NAs as below:
 
-```{r}
+```{r, echo=TRUE}
 activity_steps_day <- aggregate(steps ~ date, data = activity, FUN = sum, na.rm = TRUE)
 ```
 
 ##### 2. Make a histogram of the total number of steps taken each day
 
-```{r}
+```{r, echo=TRUE}
 hist(activity_steps_day$steps, xlab = "Number of steps per day", main = "Total number of steps per day",col="grey")
 ```
 
 ##### 3. Calculate and report the mean and median of the total number of steps taken per day
 
-```{r}
+```{r, echo=TRUE}
 mean_steps <- mean(activity_steps_day$steps)
 median_steps <- median(activity_steps_day$steps)
 mean_steps <- format(mean_steps,digits = 1)
-median_steps <- format(median_steps,digits = 1
+median_steps <- format(median_steps,digits = 1)
 ```
 
 * Mean steps per day: `r mean_steps`
@@ -67,20 +65,20 @@ median_steps <- format(median_steps,digits = 1
 
 We use the aggregate function and we remove NAs as below:
 
-```{r}
+```{r, echo=TRUE}
 activity_average_daily <- aggregate(steps ~ interval, data = activity, FUN = mean, na.rm = TRUE)
 ```
 
 We get the plot as below:
 
-```{r}
+```{r, echo=TRUE}
 plot(activity_average_daily$interval, activity_average_daily$steps, type = "l", col = "grey", xlab = "Intervals",
      ylab = "Total number of steps per interval", main = "Average number of steps taken, averaged across all days") 
 ```
 
 ##### 2. Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
 
-```{r}
+```{r, echo=TRUE}
 maximum_steps <- max(activity_average_daily$steps)
 maximum_interval <- activity_average_daily$interval[which(activity_average_daily$steps == maximum_steps)]
 maximum_steps <- format(maximum_steps, digits = 1)
@@ -97,7 +95,7 @@ maximum_steps <- format(maximum_steps, digits = 1)
 
 ##### 1. Calculate and report the total number of missing values in the dataset
 
-```{r}
+```{r, echo=TRUE}
 mv <- sum(is.na(activity))
 ```
 
@@ -107,7 +105,7 @@ mv <- sum(is.na(activity))
 
 We plot the number of missing values per interval and per day to understand which method we should consider.
 
-```{r}
+```{r, echo=TRUE}
 missing_values <- subset(activity, is.na(steps))
 par(mfrow = c(2,1), mar = c(2, 2, 1, 1))
 hist(missing_values$interval, main = "NAs repartition per interval", col = "grey")
@@ -123,7 +121,7 @@ Hence, the method will be as below:
 * We will proceed as we said in the previous part
 * Both datasets have been merged into a new dataset called _new_activity_
 
-```{r}
+```{r, echo=TRUE}
 #Mean of steps per interval
 mean_steps_interval <- tapply(activity$steps, activity$interval, mean, na.rm = TRUE)
 #Splitting
@@ -144,7 +142,7 @@ new_activity <- rbind(activity_with_NAs, activity_without_NAs)
 
 First we want to get of the total number of steps taken each day. Two datasets will be compared: one with NAs nd one with flled NAs.
 
-```{r}
+```{r, echo=TRUE}
 par(mfrow = c(1,2))
 activity_steps_day <- aggregate(steps ~ date, data = activity, FUN = sum, na.rm = TRUE)
 hist(activity_steps_day$steps, xlab = "Number of steps per day", main = "Steps / Day (without NAs)",col="grey")
@@ -154,7 +152,7 @@ hist(new_activity_steps_day$steps, xlab = "Number of steps per day", main = "Ste
 
 Then, we calculate the new mean and median values and we store them with the previous results in a table with the package xtable.
 
-```{r}
+```{r, echo=TRUE}
 new_mean_steps <- mean(new_activity_steps_day$steps)
 new_median_steps <- median(new_activity_steps_day$steps)
 new_mean_steps <- format(new_mean_steps,digits = 1)
@@ -175,7 +173,7 @@ Finally, ignoring missing values does not change the mean value but the median v
 
 ##### 1. Create a new factor variable in the dataset
 
-```{r}
+```{r, echo=TRUE}
 #ifelse function is able to consider Saturday and Sunday as the factor level "weekend" and all the others as "weekday"
 new_activity$weektype <- ifelse(weekdays(as.Date(new_activity$date)) == "samedi" | weekdays(as.Date(new_activity$date)) == "dimanche", "weekend", "weekday")
 #Transforming DayType variable into a factor
@@ -186,11 +184,11 @@ As I am French, I put "samedi" and "dimanche" but you can easily replace it by "
 
 ##### 2. Make a panel plot containing a time series plot
 
-```{r}
+```{r, echo=TRUE}
 activity_steps_interval_weektype<- aggregate(steps ~ interval + weektype, data = new_activity, FUN = mean)
 ```
 
-```{r}
+```{r, echo=TRUE}
 plot <- ggplot(activity_steps_interval_weektype, aes(interval, steps, color = weektype)) + geom_line() + facet_grid(weektype~.) + facet_wrap(~weektype, ncol = 1, nrow = 2) + labs(x = "Intervals", y = "Average number of steps", title = "Activity")
 print(plot)
 ```
